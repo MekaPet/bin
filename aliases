@@ -16,3 +16,6 @@ alias tfv='transfer-verbose'
 
 #
 alias c='clear'
+
+#commande de addalias
+alias aa='addalias'
