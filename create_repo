@@ -1,0 +1,30 @@
+#!/bin/zsh
+
+#source $COLORS
+set -o errexit
+
+# User and repo variables
+username=$(git config user.name)
+email=$(git config user.email)
+token='e6b82c5b11de0d08ad86c6b4283d8b708691f2c4'
+rdm='README.md'
+
+## Checks if arg1 exists
+if [ -z $1 ]; then
+    echo Usage: create_repo \"repo name\" to create.
+    exit 1
+else
+    ## Enter ~/Git
+    cd $HOME
+    mkdir -p Git
+    cd Git/    
+    ## Creates repo & cd-ing into that folder
+    curl -u "$username:$token" https://api.github.com/user/repos -d '{"name":"'$1'"}' > /dev/null 2>&1
+    git clone https://github.com/$username/$1.git
+    cd $1
+    ## Create a readme.md file and stage it for commit
+    echo New $1 repo > $rdm
+    git add $rdm
+    git commit -m "init commit"
+    git push
+fi

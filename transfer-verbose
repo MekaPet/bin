@@ -1,0 +1,9 @@
+#!/bin/zsh
+
+clear
+link=$(curl -T ./"$1" https://transfer.sh/"$1")
+echo
+echo "Download Link :"
+echo $link
+echo
+exit 0

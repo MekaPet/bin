@@ -1,0 +1,37 @@
+#!/bin/zsh
+## push_that for pushing repos to git in /home/raging/bin
+## 
+## Made by Eric Schneller
+## Login   <eric.schneller@epitech.net>
+## 
+## Started on  Sun Oct 23 12:36:22 2016 Eric Schneller
+## Last update Tue Nov 01 12:03:37 2017 Eric Schneller
+##
+
+source $COLORS
+set -o errexit
+
+# Script to push repo
+_CMT="$1"
+
+clear
+if [ -z $1 ]; then
+    echo ${BOLD}Usage:${WHITE} push_that \"comment to push\"
+    echo "\t${RED}or${WHITE}"
+    echo        push_that \"comment to push\" \[ \* \| files to add \]
+    exit 1
+elif [ -z $2 ]; then
+    echo Pushing ${BOLD}ONLY ${BRED}Tracked${WHITE} files.
+    echo
+    git commit -m "$_CMT"
+    git push origin master
+else
+    _CMT="$1"
+    shift
+    echo Adding "${BOLD}""$@ ""${WHITE}file(s)"
+    sleep 1
+    echo
+    git add "$@" > /dev/null 2>&1
+    git commit -m "$_CMT"
+    git push
+fi

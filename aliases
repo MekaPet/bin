@@ -1,0 +1,18 @@
+#!/bin/zsh
+
+alias ne='emacs -nw'
+alias reboot='systemctl reboot'
+alias sd='systemctl poweroff'
+
+#copier et supprime récursif (forcé)
+alias cpf='cp -r'
+alias rmf='rm -rf'
+
+#scrypt
+#nettoyer buffer et lockfile
+alias mr='mr_clean'
+alias tf='transfer'
+alias tfv='transfer-verbose'
+
+#
+alias c='clear'

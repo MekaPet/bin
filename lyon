@@ -1,0 +1,7 @@
+#!/bin/bash
+
+## Lyon
+gtk-redshift -l manual:45.764389:5.008333\
+	     -t 6500:3200\
+	     -m randr\
+	     -r #no color transition

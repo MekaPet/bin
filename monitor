@@ -1,0 +1,86 @@
+#!/bin/bash
+## monitor for monitor in /home/eric/test/Shell-Script
+## 
+## Made by Eric Schneller
+## Login   <eric.schneller@epitech.net>
+## 
+## Started on  Sat Feb 25 11:55:26 2017 Eric Schneller
+## Last update Fri Mar 10 08:20:49 2017 Eric Schneller
+##
+
+# unset any variable which system may be using
+unset tecreset os architecture kernelrelease internalip externalip nameserver loadaverage
+clear
+# Define Variable tecreset
+tecreset=$(tput sgr0)
+
+# Check if connected to Internet or not
+ping -c 1 google.com &> /dev/null && echo -e '\033[32m'"Internet: $tecreset Connected" || echo -e '\E[32m'"Internet: $tecreset Disconnected"
+
+# Check OS Type
+os=$(uname -o)
+echo -e '\033[32m'"Operating System Type :" $tecreset $os
+
+# Check OS Release Version and Name
+cat /etc/os-release | grep 'NAME\|VERSION' | grep -v 'VERSION_ID' | grep -v 'PRETTY_NAME' > /tmp/osrelease
+echo -e -n '\033[32m'"OS Name :" $tecreset  && cat /tmp/osrelease | grep -v "VERSION" | cut -f2 -d\" | head -n 1
+echo -e -n '\033[32m'"OS Version :" $tecreset && cat /tmp/osrelease | grep -v "NAME" | cut -f2 -d\"
+
+# Check Architecture
+architecture=$(uname -m)
+echo -e '\033[32m'"Architecture :" $tecreset $architecture
+
+# Check Kernel Release
+kernelrelease=$(uname -r)
+echo -e '\033[32m'"Kernel Release :" $tecreset $kernelrelease
+
+# Check hostname
+echo
+echo -e '\033[93m'"Hostname :" $tecreset $HOSTNAME
+
+# Check Internal IP
+#internalip=$(hostname -I)
+echo -e '\033[93m'"Internal IP :" $tecreset $(hostname -I)
+
+# Check External IP
+externalip=$(wget -O /dev/stdout http://checkip.dyndns.org/ --quiet | cut -d : -f 2- | cut -d \< -f -1)
+echo -e '\033[93m'"External IP :" $tecreset $externalip
+
+# Check DNS
+nameservers=$(cat /etc/resolv.conf | sed '1 d' | awk '{print $2}')
+echo -e '\033[93m'"Name Servers :" $tecreset $nameservers
+
+# Check Logged In Users
+who>/tmp/who
+echo -e '\033[93m'"Logged In users :" $tecreset && cat /tmp/who
+
+# Check RAM and SWAP Usages
+free -h | grep -v + > /tmp/ramcache
+echo
+echo -e '\033[31m'"Ram Usages :" $tecreset
+cat /tmp/ramcache | grep -v "Swap"
+echo
+echo -e '\033[31m'"Swap Usages :" $tecreset
+cat /tmp/ramcache | grep -v "Mem"
+
+# Check Disk Usages
+df -h| grep 'Filesystem\|/dev/sda*' > /tmp/diskusage
+echo
+echo -e '\033[31m'"Disk Usages :" $tecreset
+cat /tmp/diskusage
+
+# Check Load Average
+loadaverage=$(uptime | cut -d ':' -f 5-)
+echo
+echo -e '\033[31m'"Load Average :" $tecreset $loadaverage
+
+# Check System Uptime
+tecuptime=$(uptime | awk '{print $3,$4}' | cut -f1 -d,)
+echo -e '\033[31m'"System Uptime Days/(HH:MM) :" $tecreset $tecuptime
+echo
+
+# Unset Variables
+unset tecreset os architecture kernelrelease internalip externalip nameserver loadaverage
+
+# Remove Temporary Files
+rm /tmp/osrelease /tmp/who /tmp/ramcache /tmp/diskusage

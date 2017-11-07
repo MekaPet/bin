@@ -1,0 +1,12 @@
+#!/bin/sh
+## mr_clean.sh for mr_clean in /home/eric.schneller/bin
+##
+## Made by Eric Schneller
+## Login   <eric.schneller@epitech.net>
+##
+## Started on  Sun Oct 23 12:41:05 2016 Eric Schneller
+## Last update Wed May  3 11:08:54 2017 Eric Schneller
+##
+
+clear; find -name "*~" -delete -o -name "#*#" -delete; ls --color=auto
+echo
