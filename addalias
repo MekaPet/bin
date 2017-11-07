@@ -1,0 +1,11 @@
+#!/bin/zsh
+
+export ALIAS_PATH=$PSBIN/aliases
+
+clear
+echo "Nom de l'alias : "
+read alias
+echo
+echo "Nom de la commande : "
+read command
+echo "alias $alias='$command'" >> $ALIAS_PATH
