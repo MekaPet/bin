@@ -1,0 +1,37 @@
+#!/bin/zsh
+
+source $COLORS
+set -o errexit
+
+
+if [ -z $1 ]; then
+    echo
+    echo "${Blgreen}${REVERSE}Usage:${default}${Bred} *${default} ./$(basename $0) [LINKS...]"
+    echo "\t        ${BOLD}${ITAL}or${default}"
+    echo "       ${Bred}*${default} ./$(basename $0) --rename [NAME1 LINK1] [NAME2 LINK2] [NAME3 LINK3]..."
+    exit 0
+fi
+
+
+if [ $1 = "--rename" ] || [ $1 = '-r' ]; then
+    shift
+    if (( $# % 2 != 0 )); then
+	echo "${Bred}✘ ERROR:${Bwhite} Number of arguments must be paired!${white}"
+	exit 1
+    fi
+	while [[ -n $@ ]]; do
+	    name=$1; shift
+	    link=$1; shift
+	    wget -O $name.mp4 $link
+	    sleep 2
+	done
+	exit 0
+
+else
+
+    for link in $@; do
+	wget $link
+	sleep 2
+    done
+    exit 0
+fi

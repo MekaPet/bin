@@ -1,5 +1,6 @@
 #!/bin/zsh
 
+alias c='clear'
 alias ne='emacs -nw'
 alias reboot='systemctl reboot'
 alias sd='systemctl poweroff'
@@ -14,8 +15,8 @@ alias mr='mr_clean'
 alias tf='transfer'
 alias tfv='transfer-verbose'
 
-#
-alias c='clear'
+#alias git
+alias push='push_that'
 
 #commande de addalias
 alias aa='addalias'

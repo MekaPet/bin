@@ -1,0 +1,18 @@
+#!/bin/zsh
+
+source $COLORS
+#set -o errexit
+
+if [ -z $1 ]; then
+    echo
+    echo "${Bred}${REVERSE}Usage:${default} ${Bblue}*${default} ${Bwhite}$(basename $0) [LINKS...]${default}"
+    exit 0
+fi
+
+
+while [[ -n $@ ]]; do
+    youtube-dl --extract-audio --audio-format mp3 $1
+    shift
+    sleep 1
+done
+exit 0
